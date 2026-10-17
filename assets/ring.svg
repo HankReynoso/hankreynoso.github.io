@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" role="img" aria-label="Gains">
+  <circle cx="22" cy="22" r="17" fill="none" stroke="#1F5A45" stroke-width="7"/>
+  <circle cx="22" cy="22" r="17" fill="none" stroke="#E0A100" stroke-width="7" stroke-dasharray="106.8 106.8" transform="rotate(-90 22 22)"/>
+  <circle cx="22" cy="22" r="17" fill="none" stroke="#D9822B" stroke-width="7" stroke-dasharray="40 106.8" transform="rotate(-90 22 22)"/>
+</svg>
