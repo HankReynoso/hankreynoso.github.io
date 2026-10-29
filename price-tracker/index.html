@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Price Tracker · Demo</title>
+  <meta name="description" content="Demo of Hank Reynoso's Price Tracker: compare the price of a new product across stores and watch it change.">
+  <link rel="icon" href="/assets/ring.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Price Tracker</h1>
+      <p class="lede">Compare the price of a new one across stores, then check back to see if it dropped.</p>
+      <p id="demo-banner" class="demo" hidden>Demo with sample prices, running entirely in your browser. Your products are saved on this device only. The full app gets live prices from Google Shopping. <a href="https://github.com/HankReynoso/Price-Tracker">See the code</a> · <a href="/">Back to Hank's portfolio</a></p>
+    </header>
+
+    <form id="add-form" class="add">
+      <label for="query" class="visually-hidden">Product name or link</label>
+      <input id="query" name="query" type="text" autocomplete="off" required
+             placeholder="Paste a product link or type a name">
+      <button type="submit">Compare prices</button>
+    </form>
+    <p id="form-status" class="status" role="status"></p>
+
+    <div id="list-head" class="list-head" hidden>
+      <span id="count"></span>
+      <span class="list-actions">
+        <details class="dropdown" id="store-filter" hidden>
+          <summary><span class="visually-hidden">Shop at: </span><span id="store-label">All stores</span></summary>
+          <div class="menu" role="group" aria-label="Stores to shop at">
+            <button type="button" class="quiet" id="all-stores">All stores</button>
+            <div id="store-options"></div>
+          </div>
+        </details>
+        <label class="switch" title="Re-checks each product once a day. In this demo that happens when you open the page.">
+          <input type="checkbox" id="daily" role="switch">
+          <span>Check prices daily</span>
+        </label>
+        <button type="button" id="refresh-all" class="quiet">Refresh all</button>
+      </span>
+    </div>
+    <div id="products"></div>
+
+    <section id="empty" class="empty" hidden>
+      <h2>Nothing tracked yet</h2>
+      <p>Add a product above, or try one of these:</p>
+      <div class="examples">
+        <button type="button" class="quiet" data-query="Sony WH-1000XM5">Sony WH-1000XM5</button>
+        <button type="button" class="quiet" data-query="Nintendo Switch OLED">Nintendo Switch OLED</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="detail-dialog" aria-labelledby="detail-title">
+    <div id="detail"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden>
+    <span class="toast-text"></span>
+    <button type="button" class="toast-undo">Undo</button>
+  </div>
+
+  <template id="tile-tpl">
+    <button type="button" class="tile">
+      <span class="art" aria-hidden="true"></span>
+      <span class="label"></span>
+      <span class="tile-status"></span>
+    </button>
+  </template>
+
+  <template id="detail-tpl">
+    <div class="detail">
+      <div class="detail-head">
+        <span class="art" aria-hidden="true"></span>
+        <div class="title">
+          <h2 class="name" id="detail-title"></h2>
+          <span class="meta"></span>
+        </div>
+        <button type="button" class="quiet close" data-key="close" aria-label="Close">✕</button>
+      </div>
+
+      <div class="figure">
+        <span class="price"></span>
+        <span class="cue"></span>
+      </div>
+
+      <table class="offers">
+        <thead><tr><th>Store</th><th class="delivery">Delivery</th><th class="num">Price</th><th><span class="visually-hidden">Link</span></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="no-offers" hidden>No new listings found for this name. Try a more specific one below.</p>
+
+      <div class="history"><h3 class="label">Lowest price per check</h3></div>
+
+      <div class="settings">
+        <form class="target-form">
+          <label>Target price
+            <input type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="e.g. 250" data-key="target">
+          </label>
+          <button type="submit" class="quiet" data-key="set-target">Set</button>
+          <button type="button" class="quiet clear-target" data-key="clear-target">Clear</button>
+        </form>
+        <form class="name-form">
+          <label>Search name
+            <input type="text" autocomplete="off" required data-key="name">
+          </label>
+          <button type="submit" class="quiet" data-key="rename">Search again</button>
+        </form>
+        <p class="hint">Changing the name re-checks prices and starts a new history.</p>
+      </div>
+
+      <div class="foot">
+        <span class="note"></span>
+        <span class="actions">
+          <button type="button" class="quiet refresh" data-key="refresh">Refresh</button>
+          <button type="button" class="quiet danger remove" data-key="remove">Remove</button>
+        </span>
+      </div>
+    </div>
+  </template>
+
+  <script src="demo-backend.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
