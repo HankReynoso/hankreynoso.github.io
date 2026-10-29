@@ -3,25 +3,124 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hank Reynoso · Software Engineer</title>
+  <meta name="description" content="Hank Reynoso: computer science student building iOS apps and machine learning tools. Open to entry-level software engineering roles.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/site.css">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/portfolio.css">
   <link rel="icon" href="/assets/ring.svg" type="image/svg+xml">
-  <title>Hank Reynoso</title>
 </head>
 <body>
-  <header class="hero">
-    <div class="inner">
-      <h1>Hank Reynoso</h1>
-      <p>Apps I make.</p>
-    </div>
-  </header>
-  <main>
-    <section class="card">
-      <h2>Apps</h2>
-      <p><a href="/gains/">Gains</a>: workouts earn your fun money.</p>
+  <div class="wrap">
+    <nav>
+      <a class="name" href="/">Hank Reynoso</a>
+      <ul>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="https://github.com/HankReynoso">GitHub</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <div class="status">Open to entry-level software engineering roles</div>
+      <h1>I build apps people use and <em>models that learn.</em></h1>
+      <p>I'm a computer science student at George Washington University, on an accelerated track to a master's in machine learning. I've shipped an iPhone and Apple Watch app to the App Store and build data and ML projects in Python.</p>
+      <div class="links">
+        <a class="btn primary" href="#projects">See my work</a>
+        <a class="btn" href="https://github.com/HankReynoso">GitHub</a>
+        <a class="btn" href="mailto:hankrey@icloud.com">Email me</a>
+      </div>
+    </header>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects">
+
+        <article class="project featured">
+          <header>
+            <div class="title"><img class="ring" src="/assets/ring.svg" alt=""><h3>Gains</h3></div>
+            <a class="tag" href="https://apps.apple.com/us/app/gains-earn-your-fun-money/id6823886383">Live on the App Store</a>
+          </header>
+          <p>An iPhone and Apple Watch app where your workouts earn you permission to spend your own fun money. Set a weekly exercise goal and what meeting it is worth, and every workout unlocks part of it.</p>
+          <ul>
+            <li>About 9,200 lines of Swift, with the pay, streak and badge rules in a standalone package covered by 128 unit tests.</li>
+            <li>Friends feature on CloudKit with private invite codes and no server; it shares streaks and badges, never money.</li>
+            <li>Apple Health sync, a subscription, widgets, Watch complications and Siri Shortcuts, built with Xcode Cloud CI.</li>
+          </ul>
+          <div class="stack"><span>Swift</span><span>SwiftUI</span><span>SwiftData</span><span>CloudKit</span><span>HealthKit</span><span>StoreKit</span><span>WidgetKit</span><span>watchOS</span></div>
+          <div class="more"><a href="https://apps.apple.com/us/app/gains-earn-your-fun-money/id6823886383">App Store</a><a href="/gains/">App page</a><a href="/gains/privacy/">Privacy</a></div>
+        </article>
+
+        <article class="project">
+          <header><h3>F1 Strategy Predictor</h3><span class="tag">In progress</span></header>
+          <p>Predicts which pit-stop strategy each Formula 1 driver will run, from historical races, practice running and live race data.</p>
+          <ul>
+            <li>Backtesting CLI scores predictions across the full 2022–2025 era.</li>
+            <li>Offline cache mode cut full re-runs from about 10 hours to 5 minutes.</li>
+          </ul>
+          <div class="stack"><span>Python</span><span>FastF1</span><span>pytest</span><span>uv</span></div>
+          <div class="more"><a href="https://github.com/HankReynoso/F1-Strategy-Predictor">Code</a></div>
+        </article>
+
+        <article class="project">
+          <header><h3>Price Tracker</h3></header>
+          <p>A web app that tracks the prices of things you want to buy across many stores and shows when they drop.</p>
+          <ul>
+            <li>Shows each store's cheapest new price, with price history and target prices.</li>
+            <li>Opt-in daily checks; 29 unit tests and 44 headless-browser tests.</li>
+          </ul>
+          <div class="stack"><span>Python</span><span>JavaScript</span><span>HTML/CSS</span><span>SerpApi</span></div>
+          <div class="more"><a href="https://github.com/HankReynoso/Price-Tracker">Code</a></div>
+        </article>
+
+        <article class="project">
+          <header><h3>Blackjack RL Agent</h3></header>
+          <p>Can machine learning rediscover, or beat, blackjack basic strategy? A reinforcement learning agent built from scratch to find out.</p>
+          <ul>
+            <li>Moved from Q-learning to Monte Carlo methods on a custom game engine.</li>
+            <li>Parallel multi-worker simulation at large scale on Apple Silicon.</li>
+          </ul>
+          <div class="stack"><span>Python</span><span>Reinforcement learning</span><span>Multiprocessing</span></div>
+          <div class="more"><a href="https://github.com/HankReynoso/BlackJackVerification">Code</a></div>
+        </article>
+
+      </div>
     </section>
-  </main>
+
+    <section id="about">
+      <h2>About</h2>
+      <div class="grid2">
+        <div class="edu">
+          <h3>The George Washington University</h3>
+          <p>Washington, DC</p>
+          <h3>B.A. in Computer Science</h3>
+          <p>Minors in Statistics and Physics · Expected May 2027</p>
+          <h3>M.S. in Machine Learning</h3>
+          <p>Accelerated 4+1 program</p>
+          <h3>Relevant coursework</h3>
+          <p>Machine learning, neural networks and deep learning, big data and analytics, database systems, algorithms, data structures, software engineering, software design for handheld devices, computer systems, linear algebra, mathematical statistics, Bayesian statistics</p>
+        </div>
+        <dl class="skills">
+          <dt>Languages</dt><dd>Python, Swift, Java, R, JavaScript, HTML/CSS</dd>
+          <dt>iOS</dt><dd>SwiftUI, SwiftData, HealthKit, CloudKit, StoreKit, WidgetKit, App Intents, watchOS</dd>
+          <dt>ML and data</dt><dd>Reinforcement learning, backtesting, statistical modeling, pandas, Jupyter</dd>
+          <dt>Tools</dt><dd>Git, pytest, unittest, Xcode, Xcode Cloud, XcodeGen, GitHub Pages</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>I'm looking for entry-level software engineering and AI roles, remote or in the Washington, DC area. The best way to reach me is email.</p>
+      <div class="links">
+        <a class="btn primary" href="mailto:hankrey@icloud.com">hankrey@icloud.com</a>
+        <a class="btn" href="https://github.com/HankReynoso">github.com/HankReynoso</a>
+      </div>
+    </section>
+
+    <footer>© 2026 Hank Reynoso</footer>
+  </div>
 </body>
 </html>
