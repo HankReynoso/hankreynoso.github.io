@@ -47,7 +47,8 @@ function describe(product) {
   else if (targetMet) cue = { kind: "target", icon: "✓", text: best.price < target ? "Under target" : "At target", more: ` of ${money.format(target)}` };
   else if (change < 0) cue = { kind: "down", icon: "↓", text: money.format(-change), more: " since added" };
   else if (change > 0) cue = { kind: "up", icon: "↑", text: money.format(change), more: " since added" };
-  return { offers, otherStores: all.length - offers.length, best, target, history, change, targetMet, cue };
+  const sale = best != null && best.regular_price != null && best.regular_price > best.price;
+  return { sale, offers, otherStores: all.length - offers.length, best, target, history, change, targetMet, cue };
 }
 
 function ago(iso) {
@@ -123,6 +124,9 @@ function renderOffers(row, view) {
     const price = tr.insertCell();
     price.className = "num";
     price.textContent = money.format(offer.price);
+    if (offer.regular_price != null && offer.regular_price > offer.price) {
+      price.append(el("s", "was", money.format(offer.regular_price)));
+    }
     const go = tr.insertCell();
     go.className = "go";
     if (offer.url) go.append(link(offer.url, "View"));
@@ -193,6 +197,10 @@ function renderTile(product) {
     status.textContent = `! ${activity.text}`;
     status.classList.add("error");
   }
+  const view = describe(product);
+  const badge = $(".sale-badge", tile);
+  badge.hidden = !view.sale;
+  if (view.sale) badge.title = `Below its regular price of ${money.format(view.best.regular_price)}`;
   tile.addEventListener("click", () => openDetail(product.id));
   return tile;
 }
@@ -212,6 +220,12 @@ function renderDetail(product) {
     cue.dataset.kind = view.cue.kind;
     cue.append(el("span", "icon", view.cue.icon), `${view.cue.icon ? " " : ""}${view.cue.text}${view.cue.more}`);
     $(".icon", cue).setAttribute("aria-hidden", "true");
+  }
+
+  if (view.sale) {
+    const sale = el("span", "sale-note", `Below regular price of ${money.format(view.best.regular_price)}`);
+    sale.prepend(el("span", "sale-icon", "%"), " ");
+    $(".figure", body).append(sale);
   }
 
   renderOffers(body, view);
