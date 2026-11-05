@@ -4,7 +4,7 @@
 // Source: https://github.com/HankReynoso/Price-Tracker
 (() => {
   const STORES = ["Amazon", "Walmart", "Best Buy", "Target", "eBay", "B&H Photo", "Newegg", "Costco"];
-  const KEY_PRODUCTS = "pt-demo-products";
+  const KEY_PRODUCTS = "pt-demo-products-v2"; // v2: starter products with pictures and sale prices
   const KEY_SETTINGS = "pt-demo-settings";
   const MAX_HISTORY = 200;
   const DAY = 86400000;
@@ -49,10 +49,15 @@
   // ---- app/demo.py: sample shopping results in SerpApi's shape ----
   // Typical prices for the starter products, so their numbers look believable; anything else gets a seeded price.
   const KNOWN_PRICES = {
+    "nintendo switch 2": 470,
+    "iphone duo": 1950,
     "sony wh-1000xm5": 330,
-    "nintendo switch oled": 340,
     "apple airpods pro 2": 220,
-    "kitchenaid artisan stand mixer": 430,
+  };
+  // Official product pictures (Google Shopping catalog images) for starter products, as the live app shows.
+  const KNOWN_IMAGES = {
+    "nintendo switch 2": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcScgVJJbQdEN61RcHlZDbIkiHKgVWLEH9O5h33WhhPoEOz1NSadla1bfea96AhpaO_6xAHTkBQT0fQCOhf8Vb1a-IDd3RXb1ODCtSp-AZxB4eijfLpqaxyE1t-L",
+    "iphone duo": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTjibeKbCTyYC9OXrhibICrogWC8yij_-z5fSvaehK3KN2aysskiLQDKx32V0c5OsG04CeQq8Y_AIDQJiBXT5BG_LYWs5waYSLQarkcTOg",
   };
 
   function demoSearch(query, day) {
@@ -63,10 +68,12 @@
     const link = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(query)}`;
     const results = r.sample(STORES, 6).map((store) => {
       const price = Math.round(base * r.uniform(0.85, 1.15)) - 0.01;
+      const onSale = r.uniform(0, 1) < 0.4;
       return {
         title: query,
         source: store,
         extracted_price: price,
+        ...(onSale ? { extracted_old_price: Math.round(price * r.uniform(1.1, 1.3)) - 0.01 } : {}),
         product_link: link,
         delivery: r.choice(["Free delivery", "Free 2-day delivery", "$5.99 delivery", null]),
         rating: Math.round(r.uniform(3.8, 4.9) * 10) / 10,
@@ -105,10 +112,13 @@
     const hidden = { used: 0, unrelated: 0 };
     let offers = [];
     for (const r of raw) {
+      // Google Shopping shows a struck-through "regular" price beside a discounted listing.
+      const old = r.extracted_old_price;
       const offer = {
         store: (r.source || "").replace(/\s+-\s+.*$/, "") || "Unknown store",
         title: r.title || "",
         price: r.extracted_price,
+        regular_price: typeof old === "number" && old > r.extracted_price ? old : null,
         url: r.product_link,
         delivery: r.delivery ?? null,
         rating: r.rating ?? null,
@@ -130,7 +140,10 @@
       if (!best.has(key) || o.price < best.get(key).price) best.set(key, o);
     }
     offers = [...best.values()].sort((a, b) => a.price - b.price);
-    return { offers, hidden, lowest: offers[0] ?? null, highest: offers.at(-1)?.price ?? null, image: null };
+    return {
+      offers, hidden, lowest: offers[0] ?? null, highest: offers.at(-1)?.price ?? null,
+      image: KNOWN_IMAGES[query.toLowerCase()] ?? null,
+    };
   }
 
   // ---- app/resolve.py: a search name from a name or a product link ----
@@ -192,7 +205,7 @@
   }
   function apply(product, at = Date.now()) {
     const result = buildOffers(demoSearch(product.name, dayOf(at)), product.name);
-    Object.assign(product, result, { image: null, checked_at: iso(at), demo: true });
+    Object.assign(product, result, { image: result.image, checked_at: iso(at), demo: true });
     if (result.lowest) {
       product.history.push({
         at: product.checked_at,
@@ -212,10 +225,10 @@
   function seed() {
     const now = Date.now();
     const items = [
+      ["Nintendo Switch 2", 429],
+      ["iPhone Duo", null],
       ["Sony WH-1000XM5", 299],
-      ["Nintendo Switch OLED", null],
       ["Apple AirPods Pro 2", 199],
-      ["KitchenAid Artisan Stand Mixer", null],
     ].map(([name, target]) => {
       const p = blank(name, null, now - 21 * DAY);
       for (let d = 21; d >= 0; d -= 3) apply(p, now - d * DAY - (d ? 3600000 : 0));
