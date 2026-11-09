@@ -13,23 +13,7 @@
   --good-bg: #fff3bf;
   --bad: #d40000;
   --radius: 0;
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111111;
-    --surface: #1d1d1d;
-    --text: #f2f2f2;
-    --muted: #a6a6a6;
-    --border: #f2f2f2;
-    --accent: #ff7a2e;
-    --accent-text: #111111;
-    --good: #4cd07d;
-    --good-bg: #352b00;
-    --bad: #ff6680;
-    --menu-shadow: #ff4d00;
-  }
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
@@ -205,7 +189,25 @@ button.danger { color: var(--bad); }
   text-align: center;
   white-space: normal;
 }
+.tile { position: relative; }
 .tile:focus-visible { outline-offset: 4px; }
+.sale-badge, .sale-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+.sale-badge { position: absolute; top: 6px; right: 6px; }
+.sale-badge[hidden] { display: none; }
+.sale-note { font-size: 14px; font-weight: 600; color: var(--good); }
+.sale-icon { width: 20px; height: 20px; font-size: 11px; vertical-align: -3px; }
+.was { margin-left: 6px; color: var(--muted); font-weight: 400; font-size: 12px; }
 .art {
   display: grid;
   place-items: center;
