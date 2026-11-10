@@ -1,0 +1,40 @@
+/* Translation App site: stock iOS blue from the app, plus the Karaoke caption yellow (TranslationApp/Theme/Theme.swift). */
+:root {
+  --ground: #F2F2F7; --surface: #FFFFFF; --text: #111318; --muted: #5C6170;
+  --hero: #111318; --on-hero: #FFFFFF; --on-hero-muted: #B9BDC8;
+  --karaoke: #FFE500; --on-karaoke: #111318; --border: #DEDFE5; --link: #0A64D6;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0B0C0F; --surface: #17191E; --text: #ECEDF1; --muted: #9DA2B0;
+    --hero: #000000; --on-hero-muted: #B9BDC8; --border: #2A2D35; --link: #5AA6FF;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--text);
+  font: 17px/1.6 "Inter", -apple-system, system-ui, sans-serif;
+}
+a { color: var(--link); }
+.hero { background: var(--hero); color: var(--on-hero); padding: 48px 16px 40px; }
+.hero .inner, main { max-width: 720px; margin: 0 auto; }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; font: 800 22px/1 "Inter", sans-serif; }
+.cc { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--karaoke); color: var(--on-karaoke); font: 900 15px/1 "Inter", sans-serif; letter-spacing: .5px; }
+.hero h1 { font: 900 clamp(30px, 6.5vw, 44px)/1.12 "Inter", sans-serif; margin: 28px 0 12px; text-transform: uppercase; letter-spacing: -.5px; }
+.hero h1 mark { background: var(--karaoke); color: var(--on-karaoke); padding: 0 .18em; border-radius: .18em; }
+.hero p { margin: 0; color: var(--on-hero-muted); max-width: 560px; }
+.hero .badge { display: inline-block; margin-top: 18px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--on-hero-muted); color: var(--on-hero); font-size: 15px; font-weight: 600; }
+.langs { margin-top: 16px; }
+.langs a { color: var(--karaoke); font-weight: 600; }
+main { padding: 28px 16px 64px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px 22px; margin: 0 0 16px; }
+h2 { font: 700 13px/1.3 "Inter", sans-serif; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.part { font: 800 22px/1.3 "Inter", sans-serif; margin: 36px 0 16px; }
+.card p:first-of-type { margin-top: 0; }
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+ul { padding-left: 20px; }
+li { margin: 6px 0; }
+.meta { color: var(--muted); font-size: 15px; }
+footer { color: var(--muted); font-size: 14px; text-align: center; padding: 0 16px 40px; }
